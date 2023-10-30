@@ -78,6 +78,7 @@ WHERE a.Medal = 'Gold' OR a.Medal = 'Silver' OR a.Medal = 'Bronze'
 GROUP BY a.Name 
 ORDER BY Total_Medal_Count DESC 
 LIMIT 5;
+
 #Fetch the top 5 most successful countries in olympics. Success is defined by no of medals won. 
 SELECT a.Team, COUNT(*) as Total_Medal_Count 
 FROM athlete_events a 
@@ -85,6 +86,7 @@ WHERE a.Medal = 'Gold' OR a.Medal = 'Silver' OR a.Medal = 'Bronze'
 GROUP BY a.Team 
 ORDER BY Total_Medal_Count DESC 
 LIMIT 5;
+
 #List down total gold, silver and broze medals won by each country. 
 SELECT Team AS Country,
 COUNT(CASE WHEN Medal = 'Gold' THEN 1 END) AS Gold_Medals,
@@ -102,6 +104,7 @@ COUNT(CASE WHEN Medal='Bronze' THEN 1 ELSE NULL END) AS 'Total Bronze'
 FROM athlete_events 
 WHERE Medal IS NOT NULL
 GROUP BY Team, Games ORDER BY Team;
+
 #Identify which country won the most gold, most silver and most bronze medals in each olympic games.
 SELECT Games, 
   (SELECT Team FROM athlete_events WHERE Medal = 'Gold' GROUP BY Team ORDER BY COUNT(*) DESC LIMIT 1) AS MostGoldMedalTeam,
@@ -117,6 +120,7 @@ LEFT JOIN noc_regions AS r ON a.NOC = r.NOC
 WHERE a.Medal IN ('Silver', 'Bronze')
 AND a.Team NOT IN (SELECT DISTINCT Team FROM athlete_events WHERE Medal = 'Gold') 
 ORDER BY Team;
+
 #In which Sport/event, India has won highest medals. 
 SELECT Sport, COUNT(Medal) AS Medal_Count
 FROM athlete_events 
